@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+<form method="GET" action="auth">
+    <label for="name">NAME</label>
+    <input id="name" name="user"><br>
+    <label for="key">KEY</label>
+    <input id="key" name="key"><br>
+    <input type="submit">
+</form>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if error %}
+<center>
+    <h1>Error returned by Yandex</h1>
+    <h2>Code <em>{{ error.code }}</em> :: {{ error.description }}</h2>
+</center>
+{% else %}
+<ul>
+{% for item in results %}
+<li>
+    <div class="title">{{ item.title }}</div>
+    <div class="snippet">{{ item.snippet }}</div>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

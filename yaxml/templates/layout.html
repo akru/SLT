@@ -3,8 +3,8 @@
 <head>
     <meta charset=utf-8 />
     <title>SLT :: Simple Linguistic Tools</title>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <link href="/css/default.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/static/jquery.min.js"></script>
+    <link href="/static/default.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <script type="text/javascript">
@@ -19,6 +19,9 @@ $(document).ready(function() {
 </script>
 {% block body %}
 {% endblock %}
+{% if user %}
+<div id="username">{{ user }}</div>
 <a href="/logout">Logout</a>
+{% endif %}
 </body>
 </html>

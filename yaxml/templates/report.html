@@ -6,13 +6,16 @@
     <h2>Code <em>{{ error.code }}</em> :: {{ error.description }}</h2>
 </center>
 {% else %}
+{% for qstring in results %}
+<h3>{{ qstring }}</h3>
 <ul>
-{% for item in results %}
+{% for item in results[qstring] %}
 <li>
     <div class="title">{{ item.title }}</div>
     <div class="snippet">{{ item.snippet }}</div>
 </li>
 {% endfor %}
 </ul>
+{% endfor %}
 {% endif %}
 {% endblock %}

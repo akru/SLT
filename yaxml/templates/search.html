@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-<form method="GET" action="search">
-    <label for="string">QUERY</label>
-    <input id="string" name="req_string"><br>
+<form method="POST" enctype="multipart/form-data" action="search">
+    <label for="qfile">QUERY FILE</label>
+    <input type="file" id="qfile" name="qfile"><br>
     <input type="submit">
 </form>
 {% endblock %}

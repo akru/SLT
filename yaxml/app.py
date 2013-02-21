@@ -20,15 +20,15 @@ app.config.from_object(__name__)
 @app.route('/')
 def index():
     try:
-        session['user']
-        return render_template('search.html')
+        return render_template('search.html', user=session['user'])
+
     except KeyError:
         return render_template('index.html')
 
-@app.route('/search')
+@app.route('/search', methods=['POST'])
 def search():
     try:
-        req_string = request.values['req_string']
+        qfile = request.files['qfile']
 
     except KeyError:
         return make_response('Bad request', 400)
@@ -37,13 +37,19 @@ def search():
         user = session['user']
         key = session['key']
         ya = YaSearch(user, key)
-        res = ya.search(req_string)
-        print user, key, req_string
 
-        if res.error is None:
-            return render_template('report.html', results=res.items)
-        else:
-            return render_template('report.html', error=res.error)
+        results = {}
+        for qstring in qfile:
+            if len(qstring) > 1:
+                res = ya.search(qstring)
+
+                if res.error is None:
+                    results[qstring] = res.items
+                else:
+                    print res.error.code, res.error.description
+                    return render_template('report.html', error=res.error, user=user)
+
+        return render_template('report.html', results=results, user=user)
 
     except KeyError:
         return make_response('Access denied', 403)
@@ -54,10 +60,9 @@ def auth():
         user = request.values['user']
         key = request.values['key']
         
-        resp = make_response(render_template('search.html'))
         session['user'] = user
         session['key'] = key
-        return resp
+        return render_template('search.html', user=user)
 
     except KeyError:
         return make_response('Bad request', 400)
